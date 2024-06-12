@@ -25,64 +25,83 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-    config = function() require("refactoring").setup() end,
+    config = function()
+      require("refactoring").setup {
+        show_success_message = true,
+      }
+    end,
   },
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
-    opts = {
-      show_help = "yes",
-      prompts = prompts,
-      debug = false, -- Set to true to see response from Github Copilot API. The log file will be in ~/.local/state/nvim/CopilotChat.nvim.log.
-    },
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-    },
-    event = "VeryLazy",
-    keys = {
-      -- Code related commands
-      { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-      { "<leader>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-      { "<leader>ccr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
-      { "<leader>ccR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
-      { "<leader>ccf", "<cmd>CopilotChatFixCode<cr>", desc = "CopilotChat - Fix code" },
-      { "<leader>ccd", "<cmd>CopilotChatDocumentation<cr>", desc = "CopilotChat - Add documentation for code" },
-      { "<leader>cca", "<cmd>CopilotChatSwaggerApiDocs<cr>", desc = "CopilotChat - Add Swagger API documentation" },
-      {
-        "<leader>ccA",
-        "<cmd>CopilotChatSwaggerJsDocs<cr>",
-        desc = "CopilotChat - Add Swagger API with Js Documentation",
-      },
-      -- Text related commands
-      { "<leader>ccs", "<cmd>CopilotChatSummarize<cr>", desc = "CopilotChat - Summarize text" },
-      { "<leader>ccS", "<cmd>CopilotChatSpelling<cr>", desc = "CopilotChat - Correct spelling" },
-      { "<leader>ccw", "<cmd>CopilotChatWording<cr>", desc = "CopilotChat - Improve wording" },
-      { "<leader>ccc", "<cmd>CopilotChatConcise<cr>", desc = "CopilotChat - Make text concise" },
-      -- Chat with Copilot in visual mode
-      {
-        "<leader>ccv",
-        ":CopilotChatVisual",
-        mode = "x",
-        desc = "CopilotChat - Open in vertical split",
-      },
-      {
-        "<leader>ccx",
-        ":CopilotChatInPlace<cr>",
-        mode = "x",
-        desc = "CopilotChat - Run in-place code",
-      },
-      -- Custom input for CopilotChat
-      {
-        "<leader>cci",
-        function()
-          local input = vim.fn.input "Ask Copilot: "
-          if input ~= "" then vim.cmd("CopilotChat " .. input) end
-        end,
-        desc = "CopilotChat - Ask input",
-      },
-      -- Debug
-      { "<leader>ccD", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
-    },
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup {
+        keymaps = {
+          accept_suggestion = "<Tab>",
+          clear_suggestion = "<C-]>",
+          accept_word = "<C-j>",
+        },
+        ignore_filetypes = { cpp = true },
+        disable_inline_completion = false, -- disables inline completion for use with cmp
+        disable_keymaps = false, -- disables built in keymaps for more manual control
+      }
+    end,
   },
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   branch = "canary",
+  --   opts = {
+  --     show_help = "yes",
+  --     prompts = prompts,
+  --     debug = false, -- Set to true to see response from Github Copilot API. The log file will be in ~/.local/state/nvim/CopilotChat.nvim.log.
+  --   },
+  --   dependencies = {
+  --     { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+  --     { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+  --   },
+  --   event = "VeryLazy",
+  --   keys = {
+  --     -- Code related commands
+  --     { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
+  --     { "<leader>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
+  --     { "<leader>ccr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
+  --     { "<leader>ccR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
+  --     { "<leader>ccf", "<cmd>CopilotChatFixCode<cr>", desc = "CopilotChat - Fix code" },
+  --     { "<leader>ccd", "<cmd>CopilotChatDocumentation<cr>", desc = "CopilotChat - Add documentation for code" },
+  --     { "<leader>cca", "<cmd>CopilotChatSwaggerApiDocs<cr>", desc = "CopilotChat - Add Swagger API documentation" },
+  --     {
+  --       "<leader>ccA",
+  --       "<cmd>CopilotChatSwaggerJsDocs<cr>",
+  --       desc = "CopilotChat - Add Swagger API with Js Documentation",
+  --     },
+  --     -- Text related commands
+  --     { "<leader>ccs", "<cmd>CopilotChatSummarize<cr>", desc = "CopilotChat - Summarize text" },
+  --     { "<leader>ccS", "<cmd>CopilotChatSpelling<cr>", desc = "CopilotChat - Correct spelling" },
+  --     { "<leader>ccw", "<cmd>CopilotChatWording<cr>", desc = "CopilotChat - Improve wording" },
+  --     { "<leader>ccc", "<cmd>CopilotChatConcise<cr>", desc = "CopilotChat - Make text concise" },
+  --     -- Chat with Copilot in visual mode
+  --     {
+  --       "<leader>ccv",
+  --       ":CopilotChatVisual",
+  --       mode = "x",
+  --       desc = "CopilotChat - Open in vertical split",
+  --     },
+  --     {
+  --       "<leader>ccx",
+  --       ":CopilotChatInPlace<cr>",
+  --       mode = "x",
+  --       desc = "CopilotChat - Run in-place code",
+  --     },
+  --     -- Custom input for CopilotChat
+  --     {
+  --       "<leader>cci",
+  --       function()
+  --         local input = vim.fn.input "Ask Copilot: "
+  --         if input ~= "" then vim.cmd("CopilotChat " .. input) end
+  --       end,
+  --       desc = "CopilotChat - Ask input",
+  --     },
+  --     -- Debug
+  --     { "<leader>ccD", "<cmd>CopilotChatDebugInfo<cr>", desc = "CopilotChat - Debug Info" },
+  --   },
+  -- },
 }
