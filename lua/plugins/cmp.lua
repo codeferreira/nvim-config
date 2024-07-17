@@ -3,6 +3,9 @@ return {
   opts = function(_, opts)
     local cmp = require "cmp"
     opts.sources = cmp.config.sources {
+      { name = "nvim_lsp" },
+      { name = "buffer" },
+      { name = "path" },
       { name = "supermaven" },
     }
   end,
